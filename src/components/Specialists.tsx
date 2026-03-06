@@ -85,11 +85,11 @@ export default function Specialists() {
   }, { scope: sectionRef });
 
   return (
-    // Reduced pt-32 to pt-24 to pull the whole section up slightly
-    <section id="our-doctors" ref={sectionRef} className="w-full h-screen bg-[#022C22] text-[#FAFAFA] overflow-hidden flex flex-col justify-center pt-24 pb-12">
+    // Reverted to min-h-screen for universal compatibility
+    <section id="our-doctors" ref={sectionRef} className="w-full min-h-screen bg-[#022C22] text-[#FAFAFA] overflow-hidden flex flex-col justify-center pt-24 pb-12">
       
-      {/* Section Header */}
-      <div className="w-full max-w-7xl mx-auto px-6 lg:px-12 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 flex-shrink-0">
+      {/* Section Header - Reduced bottom margin to mb-8 to save vertical space */}
+      <div className="w-full max-w-7xl mx-auto px-6 lg:px-12 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6 flex-shrink-0">
         <div>
           <h2 className="text-4xl md:text-5xl font-serif mb-4">
             Meet the <span className="italic text-emerald-400 font-light">Specialists</span>
@@ -104,30 +104,31 @@ export default function Specialists() {
       </div>
 
       {/* The Track */}
-      {/* The Track */}
       <div 
         ref={carouselRef}
-        className="flex gap-6 px-6 lg:px-12 w-[max-content] items-center"
+        className="flex gap-6 px-6 lg:px-12 w-max items-center"
       >
         {specialistsData.map((doctor, index) => (
           <div 
             key={index} 
-            // Perfectly tuned widths so the 4/5 aspect ratio naturally fits laptop screens
-            className="specialist-card relative flex-shrink-0 w-[80vw] md:w-[280px] lg:w-[340px] group"
+            // Slightly tightened widths so they look elegant when height is capped
+            className="specialist-card relative shrink-0 w-[75vw] md:w-70 lg:w-[320px] group"
           >
-            {/* Removed the max-h constraint and restored our elegant mb-6 spacing */}
-            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-3xl mb-6 bg-emerald-900 shadow-xl">
+            {/* THE MAGIC BULLET: max-h-[45vh] on mobile, max-h-[50vh] on desktop. */}
+            <div className="relative w-full aspect-4/5 max-h-[45vh] lg:max-h-[50vh] overflow-hidden rounded-3xl mb-4 bg-emerald-900 shadow-xl">
               <img 
                 src={doctor.image} 
                 alt={doctor.name}
                 className="specialist-image absolute top-0 -left-12 w-[130%] h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
               />
             </div>
+            
             <h3 className="text-xl lg:text-2xl font-medium mb-1">{doctor.name}</h3>
             <p className="text-emerald-400/80 text-sm lg:text-base tracking-wide">{doctor.role}</p>
           </div>
         ))}
         
+        {/* Spacer */}
         <div className="w-[10vw]" />
       </div>
 

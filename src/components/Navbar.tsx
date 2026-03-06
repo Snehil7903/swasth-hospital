@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   
   // Single source of truth for our navigation links
-  const navLinks = ["Home", "Specialties", "Our Doctors", "Patient Portal"];
+  const scrollLinks = ["Home", "Specialties", "Our Doctors"];
 
   return (
     <>
@@ -18,11 +18,22 @@ export default function Navbar() {
         
         {/* Desktop Links */}
         <div className="hidden md:flex gap-8 items-center">
-          {navLinks.map((link) => (
-            <a key={link} href={`#${link.toLowerCase()}`} className="text-xs uppercase tracking-[0.2em] hover:text-emerald-400 transition-colors duration-300">
+          {scrollLinks.map((link) => (
+            <a 
+              key={link} 
+              href={`/#${link.toLowerCase().replace(" ", "-")}`} 
+              className="text-xs uppercase tracking-[0.2em] hover:text-emerald-400 transition-colors duration-300"
+            >
               {link}
             </a>
           ))}
+          {/* Direct link to our new Portal page */}
+          <a 
+            href="/portal" 
+            className="text-xs uppercase tracking-[0.2em] text-emerald-400 hover:text-emerald-300 transition-colors duration-300 font-medium"
+          >
+            Patient Portal
+          </a>
         </div>
 
         {/* Mobile Toggle Button */}
@@ -54,16 +65,27 @@ export default function Navbar() {
           }`}
         >
           <div className="flex flex-col gap-10">
-            {navLinks.map((link) => (
+            {/* 1. Mapped Scroll Links */}
+            {scrollLinks.map((link) => (
               <a 
                 key={link} 
-                href={`#${link.toLowerCase()}`} 
+                // Added .replace(" ", "-") so links like "Our Doctors" work perfectly
+                href={`/#${link.toLowerCase().replace(" ", "-")}`} 
                 onClick={() => setIsOpen(false)}
                 className="text-3xl text-white font-light tracking-wide hover:text-emerald-400 transition-colors duration-300"
               >
                 {link}
               </a>
             ))}
+            
+            {/* 2. Direct link to the Patient Portal */}
+            <a 
+              href="/portal" 
+              onClick={() => setIsOpen(false)}
+              className="text-3xl font-medium tracking-wide text-emerald-400 hover:text-emerald-300 transition-colors duration-300"
+            >
+              Patient Portal
+            </a>
           </div>
           
           <div className="mt-auto pb-12">
