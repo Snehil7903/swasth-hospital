@@ -1,0 +1,14 @@
+"use client";
+
+import { ReactLenis } from "lenis/react";
+
+export default function SmoothScrolling({ children }: { children: React.ReactNode }) {
+  return (
+    // 'root' tells Lenis to take over the main <html> scroll
+    // You can tweak 'lerp' (interpolation) to make it heavier or lighter. 
+    // 0.08 is a great sweet spot for a premium feel.
+    <ReactLenis root options={{ lerp: 0.08, duration: 1.5, smoothWheel: true }}>
+      {children}
+    </ReactLenis>
+  );
+}
